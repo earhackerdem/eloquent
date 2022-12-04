@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+route::get('/prueba',function(){
+    $destination = new App\Models\Destination();
+    $destination->name = 'Oaxaca';
+    return $destination;
+});
