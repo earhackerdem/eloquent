@@ -16,6 +16,9 @@ return new class extends Migration
         Schema::create('destinations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('number');
+            $table->integer('legs');
+            $table->boolean('active');
             $table->timestamps();
         });
     }
