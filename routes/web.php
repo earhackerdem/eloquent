@@ -21,49 +21,66 @@ Route::get('/', function () {
 
 route::get('/prueba', function () {
 
-    //    $flights = Flight::where('active',1)
-    //    ->where('legs','>',2)
-    //    ->orderBy('name','desc')
-    //    ->take(5)
-    //    ->get();
+     $flight = Flight::where('departed',true)->first();
+     $flight = Flight::firstWhere('departed',true);
 
-    // $numbers = range(1,10000000);
+     return $flight;
 
-    //return $numbers;
+     $flight = Flight::findOr(102, function(){
+         return "No existe";
+     });
 
-    //Util para realizar operaciones a grandes cantidades de datos
-    // $flights = Flight::chuck(20, function ($flights) {
-    //     foreach ($flights as $flight) {
-    //         $flight->number = 'a-' . $flight->number;
-    //         $flight->save();
-    //     }
-    // });
+     $flight = Flight::where('departed',true)->first();
+
+     $flight = Flight::where('legs','>',3)->firstOr(function(){
+         return "No se encontro el vuelo";
+     });
+
+     $flight = Flight::where('legs','>',2)->firstOrFail();
+
+     $flight = Flight::findOrFail(101);
 
 
-    //Util cuando se modificara el campo con el que se esta filtrando
-    // $flights = Flight::where('departed',true)->chuckById(20, function ($flights) {
-    //     foreach ($flights as $flight) {
-    //         $flight->departed = false;
-    //         $flight->save();
-    //     }
-    // }, 'id');
 
-    //return $flights;
 
-    // Lo siguiente traera todos los registros del modelo y ejecutara la actualización
-    // foreach(Flight::cursor() as $flight){
-    //     $flight->active = true;
-    //     $flight->save();
-    // }
+    $destination = Destination::firstOrCreate([
+        'name' => 'Tetel'
+    ]);
 
-    //consulta cruzada
-    $destinations = Destination::addSelect([
-        'last_flight' => Flight::select('number')
-        ->whereColumn('destination_id','destinations.id')
-        ->orderBy('arrived_at','desc')
-        ->limit(1)
-    ])->get();
 
-    return $destinations;
+
+   $flight = Flight::firstOrCreate([
+    'name' => 'Saul Pérez'
+   ], [
+    'number' => '23123',
+    'legs' => 2,
+    'active' => true,
+    'departed' => false,
+    'arrived_at' => now(),
+    'destination_id' => 1
+   ]);
+
+   $flight = Flight::firstOrNew([
+    'name' => 'Saul Pérez Ramos'
+   ], [
+    'number' => '23123',
+    'legs' => 2,
+    'active' => true,
+    'departed' => false,
+    'arrived_at' => now(),
+    'destination_id' => 1
+   ]);
+
+   $flight->save();
+
+   $flight = Flight::where('departed',true)->count();
+
+   $flight = Flight::where('departed',true)->sum('legs');
+
+   $flight = Flight::where('departed',true)->max('legs');
+
+   $flight = Flight::where('departed',true)->avg('legs');
+
+   return $flight;
 
 });

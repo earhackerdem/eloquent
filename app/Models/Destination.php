@@ -13,6 +13,8 @@ class Destination extends Model
         'name' => 'México'
     ];
 
+    protected $fillable = ['name'];
+
     // const CREATED_AT = 'created_date';
     // const UPDATED_AT = 'updated_date';
 
