@@ -18,4 +18,8 @@ class Flight extends Model
         'arrived_at',
         'destination_id'
     ];
+
+    protected $guarded = [
+        'is_admin'
+    ];
 }
