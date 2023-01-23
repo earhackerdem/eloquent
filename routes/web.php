@@ -21,24 +21,42 @@ Route::get('/', function () {
 
 route::get('/prueba', function () {
 
-    $data = [
-        'name' => 'Flight 1',
-        'number' => '123',
-        'legs' => 1,
-        'departed' => false,
-        'arrived_at' => null,
-        'destination' => 1
-    ];
+    // $flight = Flight::find(103);
 
-    $flight = Flight::updateOrCreate([
-        'name' => 'Flight 3'
-    ], [
-        'number' => '12345678900',
-        'legs' => 1,
-        'departed' => false,
-        'arrived_at' => null,
-        'destination_id' => 1
+    // $flight->delete();
+
+    $flight1 = Flight::destroy([
+        95,96,100
     ]);
 
-    return $flight;
+    // Flight::truncate();
+
+    Flight::where('active',0)->delete();
+
+    Flight::destroy(94);
+
+    $flight = Flight::findOrFail(93);
+
+
+    Flight::orderBy('id','desc')->withTrashed()->get();
+
+    Flight::onlyTrashed()->get();
+
+    Flight::where('id',93)->withTrashed()->get();
+
+    Flight::where('id',94)->withTrashed()->restore();
+
+    Flight::where('id',94)->delete();
+
+    Flight::where('id',92)->withTrashed()->forceDelete();
+
+    // $flight = Flight::where('id',94)->withTrashed()->first();
+
+    $flight = Flight::withTrashed()->find(94);
+
+    if($flight->trashed()){
+        return "El registro se encuentra en la papelera de reciclaje";
+    }else {
+        return "El registo no se encuentra en la papera de reciclaje";
+    }
 });

@@ -14,7 +14,27 @@ return new class extends Migration
     public function up()
     {
         Schema::create('flights', function (Blueprint $table) {
+
             $table->id();
+
+            $table->string('name');
+
+            $table->string('number');
+
+            $table->integer('legs');
+
+            $table->boolean('active')->default(true);
+
+            $table->boolean('departed')->default(false);
+
+            $table->timestamp('arrived_at');
+
+            $table->foreignId('destination_id')
+                ->constrained('destinations')
+                ->cascadeOnDelete();
+
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }
