@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\{Flight, Destination};
+use App\Scopes\NotDeparted;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,42 +22,15 @@ Route::get('/', function () {
 
 route::get('/prueba', function () {
 
-    // $flight = Flight::find(103);
-
-    // $flight->delete();
-
-    $flight1 = Flight::destroy([
-        95,96,100
-    ]);
-
-    // Flight::truncate();
-
-    Flight::where('active',0)->delete();
-
-    Flight::destroy(94);
-
-    $flight = Flight::findOrFail(93);
+    //return Flight::withoutGlobalScope(NotDeparted::class)->get();
 
 
-    Flight::orderBy('id','desc')->withTrashed()->get();
+    // return Flight::withoutGlobalScopes([NotDeparted::class,NotDeparted::class])->get();
 
-    Flight::onlyTrashed()->get();
+    // cuando el scope esta definido usando un callback en el modelo dentro de addGlobalScope
+    // return Flight::withoutGlobalScopes('not_departed')->get();
 
-    Flight::where('id',93)->withTrashed()->get();
+    // return Flight::active()->get();
 
-    Flight::where('id',94)->withTrashed()->restore();
-
-    Flight::where('id',94)->delete();
-
-    Flight::where('id',92)->withTrashed()->forceDelete();
-
-    // $flight = Flight::where('id',94)->withTrashed()->first();
-
-    $flight = Flight::withTrashed()->find(94);
-
-    if($flight->trashed()){
-        return "El registro se encuentra en la papelera de reciclaje";
-    }else {
-        return "El registo no se encuentra en la papera de reciclaje";
-    }
+    return Flight::legs(4)->get();
 });
