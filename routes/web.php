@@ -32,5 +32,16 @@ route::get('/prueba', function () {
 
     // return Flight::active()->get();
 
-    return Flight::legs(4)->get();
+    // Flight::create([
+    //     "name"=>"nombre",
+    //     "legs"=>"4",
+    //     "active" => 0,
+    //     "departed" => 1,
+    //     "destination_id" => 7,
+    //     "deleted_at" => null
+    // ]);
+
+    $fligth = Flight::find(108);
+
+    return $fligth;
 });
