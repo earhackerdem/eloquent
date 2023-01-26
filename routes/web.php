@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\{Flight, Destination};
+use App\Models\{Course, Flight, Destination, Mechanic, User,Phone};
 use App\Scopes\NotDeparted;
 use Illuminate\Support\Facades\Route;
 
@@ -22,26 +22,42 @@ Route::get('/', function () {
 
 route::get('/prueba', function () {
 
-    //return Flight::withoutGlobalScope(NotDeparted::class)->get();
+    // $user = User::find(1);
+
+    // return $user->phone;
 
 
-    // return Flight::withoutGlobalScopes([NotDeparted::class,NotDeparted::class])->get();
 
-    // cuando el scope esta definido usando un callback en el modelo dentro de addGlobalScope
-    // return Flight::withoutGlobalScopes('not_departed')->get();
+    // $phone = Phone::find(1);
 
-    // return Flight::active()->get();
+    // return $phone->user();
 
-    // Flight::create([
-    //     "name"=>"nombre",
-    //     "legs"=>"4",
-    //     "active" => 0,
-    //     "departed" => 1,
-    //     "destination_id" => 7,
-    //     "deleted_at" => null
-    // ]);
 
-    $fligth = Flight::find(108);
 
-    return $fligth;
+    // $user = User::find(1);
+
+    // return $user->courses;
+
+
+
+    // $course = Course::find(1);
+
+    // return $course->user;
+
+
+
+    // $user = User::find(1);
+
+    // return $user->latestCourse;
+
+
+
+    // $mechanic = Mechanic::find(1);
+
+    // return $mechanic;
+
+    $course = Course::first();
+
+    return $course->lessons;
+
 });

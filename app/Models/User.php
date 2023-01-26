@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -41,4 +42,29 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function phone() : Relation
+    {
+        return $this->hasOne(Phone::class,'user_id')->withDefault( [
+            'phone' => 'No tiene telefono'
+        ]);
+    }
+
+    public function courses() : Relation
+    {
+        return $this->hasMany(Course::class)->withDefault([
+            'courses' => 'No tiene cursos'
+        ]);
+    }
+
+    public function latestCourse() : Relation
+    {
+        return $this->hasOne(Course::class)->latestOfMany();
+    }
+
+    public function oldestCourse() : Relation
+    {
+        return $this->hasOne(Course::class)->oldestOfMany();
+    }
+
 }
