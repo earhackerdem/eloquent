@@ -56,8 +56,14 @@ route::get('/prueba', function () {
 
     // return $mechanic;
 
-    $course = Course::first();
 
-    return $course->lessons;
+
+    // $course = Course::first();
+
+    // return $course->lessons;
+
+    $user = User::find(1);
+
+    return $user->roles()->wherePivot('active','1')->get();
 
 });
